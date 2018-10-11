@@ -1,0 +1,61 @@
+<div class="content">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-10">
+				<div class="card">
+					<div class="card-header card-header-primary">
+						<h4 class="card-title ">Update Server Details</h4>
+						<p class="card-category"></p>
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+							<form (ngSubmit)="processForm()">
+
+								<div class="form-group">
+									<label for="groupName">GroupName</label> <input matInput
+										type="text" name="groupName" class="form-control"
+										[(ngModel)]="serverGroup.groupName">
+								</div>
+
+								<div class="form-group">
+									<label for="serverId">ServerId</label> <input matInput
+										type="text" name="serverId" class="form-control"
+										[(ngModel)]="serverGroup.serverId">
+								</div>
+
+								<div class="form-group">
+									<label for="serverName">Server Name</label> <input matInput
+										type="text" name="serverName" class="form-control"
+										[(ngModel)]="serverGroup.servername">
+								</div>
+
+								<div class="form-group">
+									<label for="serviceName">Service Name</label> <input matInput
+										type="text" name="serviceName" class="form-control"
+										[(ngModel)]="serverGroup.servicename">
+								</div>
+
+								<div class="form-group">
+									<label for="ip">IP</label> <input matInput type="text"
+										name="ip" class="form-control" [(ngModel)]="serverGroup.ip">
+								</div>
+								<div class="form-group">
+									<label for="port">Port</label> <input matInput type="text"
+										name="port" class="form-control"
+										[(ngModel)]="serverGroup.port">
+								</div>
+								<div class="form-group">
+									<label for="servertype">Server Type</label> <input matInput
+										type="text" name="servertype" class="form-control"
+										[(ngModel)]="serverGroup.servertype">
+								</div>
+								<input type="submit" value="save" class="btn btn-success">
+
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

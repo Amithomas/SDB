@@ -1,0 +1,103 @@
+<div class="content">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header card-header-primary">
+						<h4 class="card-title ">Server Details</h4>
+						<p class="card-category"></p>
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+
+							<table mat-table #table [dataSource]="dataSource"
+								aria-label="Elements">
+
+								<ng-container matColumnDef="position">
+								<th mat-header-cell *matHeaderCellDef>No.</th>
+								<td mat-cell *matCellDef="let element; let i = index;">{{i+1}}</td>
+								</ng-container>
+
+								<ng-container matColumnDef="GroupName">
+								<th mat-header-cell *matHeaderCellDef>GroupName</th>
+								<td mat-cell *matCellDef="let ServerGroup">{{ServerGroup.groupName}}</td>
+								</ng-container>
+
+								<ng-container matColumnDef="ServerId">
+								<th mat-header-cell *matHeaderCellDef>ServerId</th>
+								<!--<td mat-cell *matCellDef="let ServerGroup">
+								 <a
+									routerLink="/dashboard-portal/{{ServerGroup.serverId}}">{{ServerGroup.serverId}}</a></td> -->
+									<td mat-cell *matCellDef="let ServerGroup">{{ServerGroup.serverId}}</td>
+								</ng-container>
+
+
+								<ng-container matColumnDef="ServerName">
+								<th mat-header-cell *matHeaderCellDef>ServerName</th>
+								<td mat-cell *matCellDef="let ServerGroup">{{ServerGroup.servername}}</td>
+								</ng-container>
+
+
+								<ng-container matColumnDef="ServiceName">
+								<th mat-header-cell *matHeaderCellDef>ServiceName</th>
+								<td mat-cell *matCellDef="let ServerGroup">{{ServerGroup.servicename}}</td>
+								</ng-container>
+
+								<ng-container matColumnDef="ServerType">
+								<th mat-header-cell *matHeaderCellDef>ServerType</th>
+								<td mat-cell *matCellDef="let ServerGroup">{{ServerGroup.servertype}}</td>
+								</ng-container>
+
+
+								<ng-container matColumnDef="IP">
+								<th mat-header-cell *matHeaderCellDef>ServerIP</th>
+								<td mat-cell *matCellDef="let ServerGroup">{{ServerGroup.ip}}</td>
+								</ng-container>
+
+
+								<ng-container matColumnDef="Port">
+								<th mat-header-cell *matHeaderCellDef>Port</th>
+								<td mat-cell *matCellDef="let ServerGroup">{{ServerGroup.port}}</td>
+								</ng-container>
+
+								<ng-container matColumnDef="Edit">
+								<th mat-header-cell *matHeaderCellDef>Edit Server Details</th>
+								<td mat-cell *matCellDef="let ServerGroup">
+									<button mat-raised-button color="primary"
+										(click)="updateServer(ServerGroup)">Edit</button>
+								</td>
+								</ng-container>
+
+								<ng-container matColumnDef="Delete">
+								<th mat-header-cell *matHeaderCellDef>Delete Server Details</th>
+								<td mat-cell *matCellDef="let ServerGroup">
+									<button mat-raised-button color="warn"
+										(click)="deleteServer(ServerGroup)">Delete</button>
+								</td>
+								</ng-container>
+
+								<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+								<tr mat-row
+									*matRowDef="let ServerGroup; columns: displayedColumns;"></tr>
+
+							</table>
+
+
+						</div>
+
+						<div>
+							<table>
+								<td>
+									<button mat-raised-button color="primary" (click)="newServer()">Add
+										Server Details</button>
+								</td>
+							</table>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

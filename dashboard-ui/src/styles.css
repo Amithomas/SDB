@@ -1,0 +1,82 @@
+
+html, body { height: 100%; overflow-y:auto;}
+body { margin: 0; font-family: 'Roboto', sans-serif; }
+
+/***** START: Below CSS For Loader Only *****/
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.bg-loader {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 11030;
+  background-color: #d0c3c34d;
+}
+
+.loader {
+  border: 7px solid #d0c3c3;
+  border-radius: 50%;
+  border-top: 7px solid #924552;
+  width: 30px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+  position: fixed;
+  left: 47%;
+  top: 44%;
+}
+
+/***** END: Above CSS For Loader Only *****/
+
+body .ui-widget-overlay {
+    z-index: -1 !important;
+}
+
+/*.ui-dialog .ui-dialog-titlebar-icon .pi-window-minimize, .ui-dialog .ui-dialog-titlebar-icon .pi-window-maximize {
+    display: none;
+}*/
+
+body .ui-dialog .ui-dialog-footer button {
+    cursor: pointer;
+}
+
+body .ui-dialog .ui-dialog-footer .ui-primarybtn {
+    background-color: #116fbf;
+    color: #ffffff;
+    border-color: #116fbf;
+    border: 1px solid #007ad9;
+    border-radius: 3px;
+}
+
+body .ui-dialog .ui-dialog-footer .ui-button-secondary {
+    border-radius: 3px;
+    border: none;
+    padding: 3px 8px;
+}
+
+body .ui-dialog .ui-dialog-titlebar {
+    background-color: #116fbf;
+    color: #ffffff;
+}
+
+.pi-times:before {
+    color: #ffffff;
+}
+    

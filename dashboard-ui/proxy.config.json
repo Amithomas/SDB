@@ -1,0 +1,7 @@
+{
+  "/dashboard-portal": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "pathRewrite": {"^/dashboard-portal" : ""}
+  }
+}

@@ -1,0 +1,240 @@
+<gcs-loader *ngIf="isLoading"></gcs-loader>
+<mat-grid-list cols="3" rowHeight="270px"> <mat-card-content
+	class="dashboard-card-content">
+
+<div class="row">
+	<div class="col-md-4">
+		<div class="card card-chart">
+			<div class="card-header card-header-success">
+				<div class="ct-chart">
+					<canvas id="diskUsage-chart"></canvas>
+				</div>
+			</div>
+			<div class="card-header">
+				<h4 class="card-title">{{this.dashBoardData.serverId}} disk
+					usage</h4>
+				<p class="card-category"></p>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="card card-chart">
+			<div class="card-header card-header-info">
+				<div class="ct-chart">
+					<canvas id="availability-chart"></canvas>
+				</div>
+			</div>
+			<div class="card-header">
+				<h4 class="card-title">{{this.dashBoardData.serverId}}
+					availability</h4>
+				<p class="card-category"></p>
+			</div>
+
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="card card-chart">
+			<div class="card-header card-header-warning">
+				<div class="ct-chart">
+					<canvas id="cpuUsage-chart"></canvas>
+				</div>
+			</div>
+			<div class="card-header">
+				<h4 class="card-title">{{this.dashBoardData.serverId}} cpu
+					usage</h4>
+				<p class="card-category"></p>
+			</div>
+		</div>
+	</div>
+
+
+
+</div>
+</mat-card-content></mat-grid-list>
+
+<mat-grid-list cols="2" rowHeight="10px"> <mat-card-content	class="dashboard-card-content">
+
+<div class="row">
+
+	<div class="col-lg-6 col-md-12">
+		<div class="card">
+			<div class="card-header card-header-success">
+				<h6 class="card-title ">
+					Services Running<i class="material-icons">event_available</i>
+				</h6>
+			</div>
+			<div>
+				<mat-accordion> <mat-expansion-panel>
+				<mat-expansion-panel-header> <mat-panel-title>
+				Show Services </mat-panel-title> </mat-expansion-panel-header>
+				<div>
+					<table mat-table #table [dataSource]="runningServicesData"
+						aria-label="Elements">
+
+						<ng-container matColumnDef="position">
+						<th mat-header-cell *matHeaderCellDef>No.</th>
+						<td mat-cell *matCellDef="let element; let i = index;">{{i+1}}</td>
+						</ng-container>
+
+						<ng-container matColumnDef="ServiceName">
+						<th mat-header-cell *matHeaderCellDef>Service Name</th>
+						<td mat-cell *matCellDef="let Services">{{Services.servicename}}</td>
+						</ng-container>
+
+						<ng-container matColumnDef="Status">
+						<th mat-header-cell *matHeaderCellDef>Status</th>
+						<td mat-cell *matCellDef="let Services">{{Services.status}}</td>
+						</ng-container>
+						<ng-container matColumnDef="Details">
+						<th mat-header-cell *matHeaderCellDef>Details</th>
+						<td mat-cell *matCellDef="let Services">{{Services.details}}</td>
+						</ng-container>
+						<ng-container matColumnDef="ServiceType">
+						<th mat-header-cell *matHeaderCellDef>Service Type</th>
+						<td mat-cell *matCellDef="let Services">{{Services.servicetype}}</td>
+						</ng-container>
+						<ng-container matColumnDef="ServerType">
+						<th mat-header-cell *matHeaderCellDef>Server Type</th>
+						<td mat-cell *matCellDef="let Services">{{Services.servertype}}</td>
+						</ng-container>
+
+						<ng-container matColumnDef="StopService">
+						<th mat-header-cell *matHeaderCellDef>Stop Service</th>
+						<td mat-cell *matCellDef="let Services">
+							<button mat-raised-button
+								matTooltip="Stop {{Services.servicename}}"
+								[matTooltipPosition]="'above'" class="btn btn-danger btn-sm"
+								(click)="showPopup(Services , 'stop')">
+								Stop <i class="material-icons">not_interested</i>
+							</button>
+						</td>
+						</ng-container>
+						<tr mat-header-row
+							*matHeaderRowDef="displayRunningServicesColumns"></tr>
+						<tr mat-row
+							*matRowDef="let Services; columns: displayRunningServicesColumns;"></tr>
+					</table>
+				</div>
+				</mat-expansion-panel> </mat-accordion>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-6 col-md-12">
+		<div class="card">
+			<div class="card-header card-header-danger">
+				<h6 class="card-title ">
+					Services Stopped <i class="material-icons">warning</i>
+				</h6>
+			</div>
+			<div>
+				<mat-accordion> <mat-expansion-panel>
+				<mat-expansion-panel-header> <mat-panel-title>
+				Show Services </mat-panel-title> </mat-expansion-panel-header>
+				<div>
+					<table mat-table #table [dataSource]="stoppedServicesData"
+						aria-label="Elements">
+
+						<ng-container matColumnDef="position">
+						<th mat-header-cell *matHeaderCellDef>No.</th>
+						<td mat-cell *matCellDef="let element; let i = index;">{{i+1}}</td>
+						</ng-container>
+
+						<ng-container matColumnDef="ServiceName">
+						<th mat-header-cell *matHeaderCellDef>Service Name</th>
+						<td mat-cell *matCellDef="let Services">{{Services.servicename}}</td>
+						</ng-container>
+
+						<ng-container matColumnDef="Status">
+						<th mat-header-cell *matHeaderCellDef>Status</th>
+						<!--<td mat-cell *matCellDef="let ServerGroup">
+								 <a
+									routerLink="/dashboard-portal/{{ServerGroup.serverId}}">{{ServerGroup.serverId}}</a></td> -->
+						<td mat-cell *matCellDef="let Services">{{Services.status}}</td>
+						</ng-container>
+						<ng-container matColumnDef="Details">
+						<th mat-header-cell *matHeaderCellDef>Details</th>
+						<td mat-cell *matCellDef="let Services">{{Services.details}}</td>
+						</ng-container>
+						<ng-container matColumnDef="ServiceType">
+						<th mat-header-cell *matHeaderCellDef>Service Type</th>
+						<td mat-cell *matCellDef="let Services">{{Services.servicetype}}</td>
+						</ng-container>
+						<ng-container matColumnDef="ServerType">
+						<th mat-header-cell *matHeaderCellDef>Server Type</th>
+						<td mat-cell *matCellDef="let Services">{{Services.servertype}}</td>
+						</ng-container>
+
+						
+						<ng-container matColumnDef="StartService">
+						<th mat-header-cell *matHeaderCellDef>Start Service</th>
+						
+						<td mat-cell *matCellDef="let Services">
+						<div [ngStyle]="{'width': value + '%'}" class="bar">
+							<button mat-raised-button
+								matTooltip="Start {{Services.servicename}}"
+								[matTooltipPosition]="'above'" class="btn btn-success btn-sm"
+								(click)="showPopup(Services, 'start')">
+								Start <i class="material-icons">play_circle_filled</i>
+							</button>
+							</div>
+						</td>
+						</ng-container>
+						
+						<tr mat-header-row
+							*matHeaderRowDef="displayStoppedServicesColumns"></tr>
+						<tr mat-row
+							*matRowDef="let ServerGroup; columns: displayStoppedServicesColumns;"></tr>
+					</table>
+				</div>
+				</mat-expansion-panel> </mat-accordion>
+			</div>
+		</div>
+	</div>
+
+	<p-dialog header="Info" [(visible)]="displaystopdialog" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200" [minY]="70" 
+         [baseZIndex]="10000">
+    	<span>Do you want to proceed ?</span>
+        <p-footer>
+            <button type="button" pButton icon="pi pi-check" (click)="stopService()" label="Yes" class="ui-primarybtn">Yes</button>
+            <button type="button" pButton icon="pi pi-close" (click)="displaystopdialog = !displaystopdialog" label="No" class="ui-button-secondary">No</button>
+        </p-footer>
+	</p-dialog>
+
+	<p-dialog header="Info" [(visible)]="displaystartdialog" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200" [minY]="70" 
+         [baseZIndex]="10000">
+    	<span>Do you want to proceed ?</span>
+        <p-footer>
+            <button type="button" pButton icon="pi pi-check" (click)="startService()" label="Yes" class="ui-primarybtn">Yes</button>
+            <button type="button" pButton icon="pi pi-close" (click)="displaystartdialog = !displaystartdialog" label="No" class="ui-button-secondary">No</button>
+        </p-footer>
+	</p-dialog>
+
+
+</div>
+
+</mat-card-content> </mat-grid-list>
+
+
+
+<!-- 
+	<div class="row">
+		<mat-grid-list cols="2" rowHeight="350px"> 	<mat-card class="dashboard-card"> <mat-card-content
+			class="dashboard-card-content">
+
+		<div class="col-md-4" width="200" height="200">
+			<canvas id="diskUsage-chart"></canvas>
+		</div>
+
+		<div class="col-md-4">
+			<canvas id="availability-chart"></canvas>
+		</div>
+
+		<div class="col-md-4">
+			<canvas id="cpuUsage-chart"></canvas>
+		</div>
+
+
+		</mat-card-content> </mat-card> </mat-grid-list>
+	</div>
+	 -->

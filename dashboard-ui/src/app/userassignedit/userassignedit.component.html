@@ -1,0 +1,38 @@
+<div class="content">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header card-header-primary">
+						<h4 class="card-title ">Server Details</h4>
+						<p class="card-category"></p>
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+
+							<form (ngSubmit)="processForm()">
+
+								<div class="form-group">
+									<label for="userId">UserId</label> <input matInput type="text"
+										name="userId" class="form-control"
+										[(ngModel)]="userInGroup.userId">
+								</div>
+
+								<div class="form-group">
+									<label for="groupName">GroupName</label> <input matInput
+										type="text" name="groupName" class="form-control"
+										[(ngModel)]="userInGroup.groupName">
+								</div>
+
+								<input type="submit" value="save" class="btn btn-success">
+
+							</form>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

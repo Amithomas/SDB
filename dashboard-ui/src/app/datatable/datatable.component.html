@@ -1,0 +1,57 @@
+
+<ul *ngFor="let serverGroup of getKeys(serverList)">
+	<div class="col-md-8">
+		<div class="card ">
+			<div class="card-header card-header-info">
+				<h6 class="card-title ">Server Group : {{serverGroup}}</h6>
+				<i class="material-icons">business</i>
+			</div>
+			<div>
+				<mat-accordion> <mat-expansion-panel
+					(opened)="panelOpenState = true" (closed)="panelOpenState = false">
+				<mat-expansion-panel-header> <mat-panel-title>
+				Show Servers </mat-panel-title> </mat-expansion-panel-header>
+				<div class=" row card-group">
+					<ul *ngFor="let server of serverList[serverGroup]">
+						<div class="card card-stats">
+							<div class="card-header card-header-info card-header-icon">
+								<div class="card-icon ">
+									<button mat-raised-button class="card-header-primary "
+										(click)="showDashBoard(server)">
+										{{server.serverId}} <i class="material-icons">business</i>
+									</button>
+								</div>
+							</div>
+						</div>
+					</ul>
+				</div>
+				</mat-expansion-panel> </mat-accordion>
+			</div>
+		</div>
+	</div>
+</ul>
+
+<!-- 
+<ul *ngFor="let serverGroup of getKeys(serverList)">
+	<div class="col-md-8">
+		<div class="card card-stats">
+			<div class="card-header card-header-info card-header-icon">
+
+				<ul *ngFor="let server of serverList[serverGroup]">
+					<div class="card-icon ">
+						<button mat-raised-button class="card-header-primary"
+							(click)="showDashBoard(server)">
+							{{server.serverId}} <i class="material-icons">personal_video</i>
+						</button>
+					</div>
+
+				</ul>
+			</div>
+			<div class="card-footer">{{serverGroup}}</div>
+		</div>
+	</div>
+
+
+</ul>
+
+ -->

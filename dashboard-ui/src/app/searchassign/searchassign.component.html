@@ -1,0 +1,62 @@
+
+<h3>Search User</h3>
+<form>
+	<input type="search" name="query" [(ngModel)]="query"
+		(keyup.enter)="search()">
+	<button  mat-raised-button class="btn btn-info" (click)="search()">Search <i class="material-icons">search</i></button>
+</form>
+
+<div>
+	<table>
+		<button mat-raised-button color="primary" (click)="assignNewGroup()">Assign
+			New Group </button>
+	</table>
+</div>
+
+
+
+<table class="table table-striped" *ngIf="searchResults">
+	<div class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-10">
+					<div class="card">
+						<div class="card-header card-header-primary">
+							<h5 class="card-title ">Edit Group</h5>
+							<p class="card-category"></p>
+						</div>
+						<thead>
+							<th>User Id</th>
+							<th>Group Name</th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let userInGroup of searchResults">
+								<td>{{userInGroup.userId}}</td>
+								<td>{{userInGroup.groupName}}</td>
+								<td>
+								<button mat-raised-button color="primary"
+										(click)="updateGroupName(userInGroup)">Edit</button>
+								</td>
+								<td>		
+									<button mat-raised-button color="warn"
+										(click)="deleteByUserIdAndGroupName(userInGroup)">Delete</button>
+									
+								</td>
+
+							</tr>
+						</tbody>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+</table>
+
+
+
+
+

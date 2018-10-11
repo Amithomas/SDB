@@ -1,0 +1,13 @@
+[{
+    "id" : "serverA",    
+	"name" : "Server A",
+	"OS": "Linux" 
+	  		
+},
+{
+    "id" : "serverB",       
+	"name" : "Server B",
+	"OS": "Linux" 		
+}
+
+]
