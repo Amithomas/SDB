@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-
+import com.equifax.dashboardportal.model.RAMStatus;
 import com.equifax.dashboardportal.model.CPUStatus;
 import com.equifax.dashboardportal.model.DiskStatus;
 import com.equifax.dashboardportal.model.HostStatus;
@@ -18,6 +18,7 @@ import com.equifax.dashboardportal.model.ServicesRunning;
 import com.equifax.dashboardportal.model.ServiceStatus;
 import com.equifax.dashboardportal.model.Service;
 import com.equifax.dashboardportal.repository.HostCPURepository;
+import com.equifax.dashboardportal.repository.HostRAMRepository;
 //import com.howtodoinjava.demo.repository.ServerActionsRepository;
 //import com.equifax.dashboardportal.repository.ServerGroupRepository;
 import com.equifax.dashboardportal.repository.serveractrepository;
@@ -31,12 +32,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class StatusController {
 	@Autowired
 	private ServerGroupRepository repository;
-	
+	@Autowired
+	private HostRAMRepository repository3;
 	@Autowired
 	private serveractrepository repository1;
 	
@@ -102,11 +104,12 @@ public class StatusController {
 	@RequestMapping("/diskstatus")
     public DiskStatus getdiskstatus() throws IOException 
     {
-		Resource resource = resourceLoader.getResource("classpath:Disk.txt");
-		String state = null;
-		InputStream in = resource.getInputStream();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-		state=reader.readLine();
+		String[] command = { "/usr/local/nagios/libexec/check_disk","-w","20%","-c","10%"};
+            Process process = Runtime.getRuntime().exec(command);
+ BufferedReader reader = new BufferedReader(new InputStreamReader(
+                process.getInputStream()));
+                String state= null;
+                state=reader.readLine();
 		String[] splitStr = state.trim().split("\\s+");
 		DiskStatus disk= new DiskStatus();
 		disk.setAvailable(Double.parseDouble(splitStr[6]));
@@ -123,10 +126,11 @@ public class StatusController {
 	@RequestMapping(value="/cpustatus", method = RequestMethod.GET)
     public CPUStatus getcpustatus() throws IOException 
     {
-		Resource resource = resourceLoader.getResource("classpath:CPU.txt");
-		String state = null;
-		InputStream in = resource.getInputStream();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		 String[] command = { "/usr/local/nagios/libexec/check_cpu_stats.sh"};
+            Process process = Runtime.getRuntime().exec(command);
+ BufferedReader reader = new BufferedReader(new InputStreamReader(
+                process.getInputStream()));
+		String state= null;
 		state=reader.readLine();
 		String[] splitStr = state.trim().split("\\s+");
 		CPUStatus cpu1= repository2.findBygroupName("servergroup#1");
@@ -147,7 +151,62 @@ public class StatusController {
 		repository2.save(cpu1);
 		return cpu1;
     }
-	
+	@CrossOrigin
+
+       @RequestMapping(value="/ramstatus", method = RequestMethod.GET)
+
+    public RAMStatus getramstatus() throws IOException
+
+    {             String[] command = { "/usr/local/nagios/libexec/check_disk","-f","-w","20%","-c","10%"};
+            Process process = Runtime.getRuntime().exec(command);
+ BufferedReader reader = new BufferedReader(new InputStreamReader(
+                process.getInputStream()));
+                String state= null;
+
+
+              
+
+              state=reader.readLine();
+
+              String[] splitStr = state.trim().split("\\s+");
+
+              RAMStatus ram1= repository3.findBygroupName("servergroup#1");
+
+              System.out.print(splitStr[2].substring(0,4));
+
+              ram1.setRAMUsage(100-(Double.parseDouble(splitStr[2].substring(0,4))));
+
+              String []stat= ram1.getDATA();
+
+              String temp = stat[11];
+
+              String v;
+
+              stat[11]=ram1.getRAMUsage().toString();
+
+              for(int i=10;i>=0;i--)
+
+              {
+
+                     v=stat[i];
+
+                     stat[i]=temp;
+
+                     temp=v;
+
+                    
+
+                    
+
+              }
+
+              ram1.setDATA(stat);
+
+              repository3.save(ram1);
+
+              return ram1;
+
+    }
 	/*@RequestMapping(value="/services", method = RequestMethod.GET)
     public List<ServicesRunning> getservices() throws IOException {
 		Resource resource = resourceLoader.getResource("classpath:netstat.txt");
@@ -277,13 +336,46 @@ public class StatusController {
 	    return S;
 	    
     }
-	@RequestMapping(value="/insert", method = RequestMethod.POST)
-	public CPUStatus Insert (@RequestBody CPUStatus sg)
-	{	
-		
-		return repository2.save(sg);	
-	}
-	/*@RequestMapping(value="/viewall", method = RequestMethod.GET)
+	@RequestMapping(value="/insert", method = RequestMethod.GET)
+       public RAMStatus Insert1 (@RequestBody RAMStatus sg)
+      
+       {     
+              RAMStatus sg =new RAMStatus();
+              sg.setGroupName("servergroup#1");
+              sg.setRAMUsage(49.9998);
+              sg.setIp("1.1.1.1");
+              String [] d = {"54.72",
+                      "54.72",
+                      "54.72",
+                      "54.72",
+                      "54.72",
+                      "54.72",
+                      "54.72",
+                      "54.72",
+                      "54.72",
+                      "54.72",
+                      "54.72",
+                      "54.72"};
+ 
+              sg.setDATA(d);
+              String [] l= {
+                           "5m",
+                      "10m",
+                      "15m",
+                      "20m",
+                      "25m",
+                      "30m",
+                      "35m",
+                      "40m",
+                      "45m",
+                      "50m",
+                      "55m",
+                      "60m"
+ 				 };
+		sg.setLabels(l);
+return repository2.save(sg);
+}
+/*@RequestMapping(value="/viewall", method = RequestMethod.GET)
 	public List<ServerGroup> Insert () throws IOException
 	{	
 		List<ServerGroup> nsg= new ArrayList<ServerGroup>();
@@ -319,11 +411,11 @@ public class StatusController {
 		}
 		return  nsg;	
 	}*/
-	@CrossOrigin
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@RequestMapping(value="/services", method = RequestMethod.GET)
 	public List<Service> service_list () throws IOException
 	{	
-		String[] command = {"D:\\curl-7.61.1-win64-mingw\\bin\\curl","-v","-u","tomcat:s3cret","http://127.0.0.1:8070/manager/text/list" };
+		String[] command = {"curl","--noproxy","*","-v","-u","my_user:my_pass","http://127.0.0.1:8080/manager/text/list" };
 	    Process process = Runtime.getRuntime().exec(command);
 	    BufferedReader reader = new BufferedReader(new InputStreamReader(
 	        process.getInputStream()));
@@ -374,7 +466,7 @@ public class StatusController {
 	@RequestMapping(value="/servicestatus", method = RequestMethod.POST)
 	public Service service_status (@RequestBody Service st) throws IOException
 	{	
-		String[] command = {"D:\\curl-7.61.1-win64-mingw\\bin\\curl","-v","-u","tomcat:s3cret","http://127.0.0.1:8070/manager/text/list" };
+		String[] command = {"" };
 	    Process process = Runtime.getRuntime().exec(command);
 	    BufferedReader reader = new BufferedReader(new InputStreamReader(
 	        process.getInputStream()));
@@ -399,15 +491,15 @@ public class StatusController {
 		
 		return service;
 	}
-	@CrossOrigin
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@RequestMapping(value="/stopservice", method = RequestMethod.POST)
 	public boolean stopservice (@RequestBody Service service) throws IOException
 	{	
 		String s1= service.getServicename();
-		String template="http://127.0.0.1:8070/manager/text/stop?path=%s";
+		String template="http://127.0.0.1:8080/manager/text/stop?path=%s";
 		String path=String.format(template,s1);
 	
-		String[] command = {"D:\\curl-7.61.1-win64-mingw\\bin\\curl","-v","-u","tomcat:s3cret",path };
+		String[] command = {"curl","--noproxy","*","-v","-u","my_user:my_pass",path };
 	    Process process = Runtime.getRuntime().exec(command);
 	    BufferedReader reader = new BufferedReader(new InputStreamReader(
 	        process.getInputStream()));
@@ -426,15 +518,15 @@ public class StatusController {
 	    
 		
 	}
-	@CrossOrigin
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@RequestMapping(value="/startservice", method = RequestMethod.POST)
 	public boolean startservice (@RequestBody Service service) throws IOException
 	{	
 		String s1= service.getServicename();
-		String template="http://127.0.0.1:8070/manager/text/start?path=%s";
+		String template="http://127.0.0.1:8080/manager/text/start?path=%s";
 		String path=String.format(template,s1);
 	
-		String[] command = {"D:\\curl-7.61.1-win64-mingw\\bin\\curl","-v","-u","tomcat:s3cret",path };
+		String[] command = {"curl","--noproxy","*","-v","-u","my_user:my_pass",path };
 	    Process process = Runtime.getRuntime().exec(command);
 	    BufferedReader reader = new BufferedReader(new InputStreamReader(
 	        process.getInputStream()));

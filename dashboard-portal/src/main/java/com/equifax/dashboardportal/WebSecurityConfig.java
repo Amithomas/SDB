@@ -13,8 +13,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable()
-        .cors().and().authorizeRequests().anyRequest().fullyAuthenticated().and().formLogin();
+		//http.csrf().disable()
+        //.cors().and().authorizeRequests().anyRequest().fullyAuthenticated().and().formLogin();
 
 		// http.httpBasic().and().authorizeRequests().anyRequest().authenticated().and().csrf().disable();
 	}
@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.ldapAuthentication().userDnPatterns("uid={0},ou=people").groupSearchBase("ou=groups").contextSource()
-				.url("ldap://localhost:8389/dc=springframework,dc=org").and().passwordCompare()
+				.url("ldap://10.10.114.52:8389/dc=springframework,dc=org").and().passwordCompare()
 				.passwordEncoder(new LdapShaPasswordEncoder()).passwordAttribute("userPassword");
 	}
 

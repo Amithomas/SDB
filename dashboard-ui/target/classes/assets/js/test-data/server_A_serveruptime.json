@@ -1,0 +1,21 @@
+ {
+         "labels" : ["15m","30m","45m","60m","85m","100m","115m","130m"],
+        "datasets": [
+			{
+			   "label" : "Availibility",
+			   "data" : [ 100,90,0,100,100,100,100,100,100,100],
+			   "borderColor": "white",
+                "pointBorderColor": "white",
+                "pointBackgroundColor": "#80b6f4",
+                "pointHoverBackgroundColor": "#80b6f4",
+                "pointHoverBorderColor": "#80b6f4",
+                "pointBorderWidth": 5,
+                "pointHoverRadius": 5,
+                "pointHoverBorderWidth": 1,
+                "pointRadius": 1,
+                "fill": true,
+                "borderWidth": 2
+			}
+		]
+		
+}

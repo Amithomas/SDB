@@ -1,0 +1,1 @@
+﻿D:\\curl-7.61.1-win64-mingw\\bin\\curl,-v,-u,tomcat:s3cret,http://127.0.0.1:8070/manager/text/list

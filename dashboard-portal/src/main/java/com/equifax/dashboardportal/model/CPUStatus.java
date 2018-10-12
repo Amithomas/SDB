@@ -11,7 +11,7 @@ import javax.persistence.Table;
 public class CPUStatus {
 	@Column
 	private Double CPUusage;
-	@Column
+	@Column(columnDefinition="longblob")
 	private String[] DATA;
 	
 	@Column
