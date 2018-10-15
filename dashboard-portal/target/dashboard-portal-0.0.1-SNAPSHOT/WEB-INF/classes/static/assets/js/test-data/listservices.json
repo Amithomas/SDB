@@ -1,0 +1,92 @@
+[
+	{
+		"servicename": "serviceN",
+		"servername": "serverA",
+		"servertype": "tomcat",
+		"servergroup": "servergroup1",
+		"serverip": "1.1.1.1",
+		"port": "8080",
+		"servicetype": "webservice",
+		"status": "running"
+	},
+	{
+		"servicename": "serviceM",
+		"servername": "serverA",
+		"servertype": "tomcat",
+		"servergroup": "servergroup1",
+		"serverip": "1.1.1.1",
+		"port": "8080",
+		"servicetype": "webservice",
+		"status": "running"
+	},
+	{
+		"servicename": "serviceL",
+		"servername": "serverA",
+		"servertype": "tomcat",
+		"servergroup": "servergroup1",
+		"serverip": "1.1.1.1",
+		"port": "8080",
+		"servicetype": "webservice",
+		"status": "running"
+	},
+	{
+		"servicename": "serviceX",
+		"servername": "serverA",
+		"servertype": "tomcat",
+		"servergroup": "servergroup1",
+		"serverip": "1.1.1.1",
+		"port": "8080",
+		"servicetype": "webservice",
+		"status": "running"
+	},
+	{
+		"servicename": "serviceY",
+		"servername": "serverA",
+		"servertype": "tomcat",
+		"servergroup": "servergroup1",
+		"serverip": "1.1.1.1",
+		"port": "8080",
+		"servicetype": "webservice",
+		"status": "running"
+	},
+	{
+		"servicename": "serviceZ",
+		"servername": "serverA",
+		"servertype": "tomcat",
+		"servergroup": "servergroup1",
+		"serverip": "1.1.1.1",
+		"port": "8080",
+		"servicetype": "webservice",
+		"status": "running"
+	},
+	{
+		"servicename": "serviceC",
+		"servername": "serverC",
+		"servertype": "tomcat",
+		"servergroup": "servergroup1",
+		"serverip": "1.1.1.1",
+		"port": "8080",
+		"servicetype": "webservice",
+		"status": "stopped"
+	},
+	{
+		"servicename": "serviceE",
+		"servername": "serverC",
+		"servertype": "tomcat",
+		"servergroup": "servergroup1",
+		"serverip": "1.1.1.1",
+		"port": "8080",
+		"servicetype": "webservice",
+		"status": "stopped"
+	},
+	{
+		"servicename": "serviceD",
+		"servername": "serverC",
+		"servertype": "tomcat",
+		"servergroup": "servergroup1",
+		"serverip": "1.1.1.1",
+		"port": "8080",
+		"servicetype": "webservice",
+		"status": "stopped"
+	}
+]

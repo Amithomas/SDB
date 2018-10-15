@@ -1,0 +1,1 @@
+﻿CPU STATISTICS OK: user=90% system=6.26% iowait=3.23% idle=45.282% | user=31.11% system=6.26% iowait=3.23%;30;100 idle=59.39%
