@@ -60,7 +60,7 @@ export class DashboardService {
     
     
     startService( ser ) {
-        return this._http.post( './startservice', ser ).pipe( map(( response: Response ) => response ),
+        return this._http.get( './startservice?sname='+ ser ).pipe( map(( response: Response ) => response ),
             catchError( this.errorHandler ), );
     }
     
@@ -70,7 +70,7 @@ export class DashboardService {
     }*/
 
     stopService( ser ) {
-        return this._http.post( './stopservice', ser ).pipe( map(( response: Response ) => response ),
+        return this._http.get( './stopservice?sname='+ ser ).pipe( map(( response: Response ) => response ),
             catchError( this.errorHandler ), );
     }
 

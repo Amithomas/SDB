@@ -646,14 +646,14 @@ var DashboardService = /** @class */ (function () {
         return this._http.post('./deleteserver/', sg).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["map"])(function (response) { return response; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["catchError"])(this.errorHandler));
     };
     DashboardService.prototype.startService = function (ser) {
-        return this._http.post('./startservice', ser).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["map"])(function (response) { return response; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["catchError"])(this.errorHandler));
+        return this._http.get('./startservice?sname=' + ser).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["map"])(function (response) { return response; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["catchError"])(this.errorHandler));
     };
     /*stopService( ser: Services ) {
         return this._http.post( 'http://localhost:8090/stopservice', ser ).pipe( map(( response: Response ) => response ),
             catchError( this.errorHandler ), );
     }*/
     DashboardService.prototype.stopService = function (ser) {
-        return this._http.post('./stopservice', ser).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["map"])(function (response) { return response; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["catchError"])(this.errorHandler));
+        return this._http.get('./stopservice?sname=' + ser).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["map"])(function (response) { return response; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["catchError"])(this.errorHandler));
     };
     DashboardService.prototype.createServer = function (sg) {
         return this._http.post('./addserver/', sg).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["map"])(function (response) { return response; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["catchError"])(this.errorHandler));
@@ -844,7 +844,7 @@ var DashboardComponent = /** @class */ (function () {
     DashboardComponent.prototype.startService = function () {
         var _this = this;
         this.isLoading = true;
-        this.data.startService(this.servicesdetails).subscribe(function (data) {
+        this.data.startService(this.servicesdetails['servicename']).subscribe(function (data) {
             if (data) {
                 _this.stoppedServices.splice(_this.stoppedServices.indexOf(_this.servicesdetails), 1);
                 _this.stoppedServicesData = new _angular_material_table__WEBPACK_IMPORTED_MODULE_7__["MatTableDataSource"](_this.stoppedServices);
@@ -852,6 +852,22 @@ var DashboardComponent = /** @class */ (function () {
                 _this.runningServicesData = new _angular_material_table__WEBPACK_IMPORTED_MODULE_7__["MatTableDataSource"](_this.runningServices);
                 _this.isLoading = false;
                 _this.displaystartdialog = false;
+            }
+        }, function (error) {
+            console.log(error);
+        });
+    };
+    DashboardComponent.prototype.stopService = function () {
+        var _this = this;
+        this.isLoading = true;
+        this.data.stopService(this.servicesdetails['servicename']).subscribe(function (data) {
+            if (data) {
+                _this.runningServices.splice(_this.runningServices.indexOf(_this.servicesdetails), 1);
+                _this.runningServicesData = new _angular_material_table__WEBPACK_IMPORTED_MODULE_7__["MatTableDataSource"](_this.runningServices);
+                _this.stoppedServices.push(_this.servicesdetails);
+                _this.stoppedServicesData = new _angular_material_table__WEBPACK_IMPORTED_MODULE_7__["MatTableDataSource"](_this.stoppedServices);
+                _this.isLoading = false;
+                _this.displaystopdialog = false;
             }
         }, function (error) {
             console.log(error);
@@ -872,22 +888,6 @@ var DashboardComponent = /** @class */ (function () {
         } );
 
     }*/
-    DashboardComponent.prototype.stopService = function () {
-        var _this = this;
-        this.isLoading = true;
-        this.data.stopService(this.servicesdetails).subscribe(function (data) {
-            if (data) {
-                _this.runningServices.splice(_this.runningServices.indexOf(_this.servicesdetails), 1);
-                _this.runningServicesData = new _angular_material_table__WEBPACK_IMPORTED_MODULE_7__["MatTableDataSource"](_this.runningServices);
-                _this.stoppedServices.push(_this.servicesdetails);
-                _this.stoppedServicesData = new _angular_material_table__WEBPACK_IMPORTED_MODULE_7__["MatTableDataSource"](_this.stoppedServices);
-                _this.isLoading = false;
-                _this.displaystopdialog = false;
-            }
-        }, function (error) {
-            console.log(error);
-        });
-    };
     DashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.dashBoardData = this.data.getterServerGroup();

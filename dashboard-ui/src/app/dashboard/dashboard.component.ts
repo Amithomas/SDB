@@ -77,26 +77,79 @@ export class DashboardComponent {
        if(status == 'start'){
            this.displaystartdialog = true;
        } else if(status == 'stop') {
-           this.displaystopdialog = true;
-       }
-       
-       this.servicesdetails = servicesdetails;
-    }
-    
-    startService( ) {
+           this.displaystopdialog=true;
+}
+this.servicesdetails=servicesdetails;
+}
+
+startService( ) {
+
         this.isLoading = true;
-        this.data.startService( this.servicesdetails ).subscribe(( data ) => {
+
+        this.data.startService( this.servicesdetails['servicename'] ).subscribe(( data ) => {
+
             if(data){
+
             this.stoppedServices.splice( this.stoppedServices.indexOf( this.servicesdetails ), 1 );
+
             this.stoppedServicesData = new MatTableDataSource( this.stoppedServices );
+
             this.runningServices.push( this.servicesdetails );
+
             this.runningServicesData = new MatTableDataSource( this.runningServices );
+
             this.isLoading = false;
+
             this.displaystartdialog = false;
+
             }
+
         }, ( error ) => {
+
             console.log( error );
+
         } );
+
+    }
+
+ 
+
+   
+
+ 
+
+ 
+
+    stopService() {
+
+        this.isLoading = true;
+
+        this.data.stopService( this.servicesdetails['servicename'] ).subscribe(( data ) => {
+
+            if(data){
+
+            this.runningServices.splice( this.runningServices.indexOf( this.servicesdetails ), 1 );
+
+            this.runningServicesData = new MatTableDataSource( this.runningServices );
+
+            this.stoppedServices.push( this.servicesdetails );
+
+            this.stoppedServicesData = new MatTableDataSource( this.stoppedServices );
+
+            this.isLoading = false;
+
+            this.displaystopdialog = false;
+
+            }
+
+        }, ( error ) => {
+
+            console.log( error );
+
+        } );
+
+ 
+
     }
 
     
@@ -117,24 +170,7 @@ export class DashboardComponent {
 
     }*/
 
-    stopService() { 
-        this.isLoading = true;
-        this.data.stopService( this.servicesdetails ).subscribe(( data ) => {
-            if(data){ 
-            this.runningServices.splice( this.runningServices.indexOf( this.servicesdetails ), 1 );
-            this.runningServicesData = new MatTableDataSource( this.runningServices );
-            this.stoppedServices.push( this.servicesdetails );
-            this.stoppedServicesData = new MatTableDataSource( this.stoppedServices );
-            this.isLoading = false;
-            this.displaystopdialog = false;
-            }
-        }, ( error ) => {
-            console.log( error );
-        } );
-
-    }
-
-
+  
     ngOnInit() {
 
         this.dashBoardData = this.data.getterServerGroup();

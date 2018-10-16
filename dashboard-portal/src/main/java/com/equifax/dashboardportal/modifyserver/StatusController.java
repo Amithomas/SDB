@@ -153,6 +153,21 @@ public class StatusController {
 		repository2.save(cpu1);
 		return cpu1;
     }
+@CrossOrigin
+@RequestMapping(value="/insert1", method = RequestMethod.POST)
+       public String Insert12 ()
+      
+       {     
+             
+             
+             
+                          
+              return "hello";    
+      
+}
+
+
+
 	@CrossOrigin
 
        @RequestMapping(value="/ramstatus", method = RequestMethod.GET)
