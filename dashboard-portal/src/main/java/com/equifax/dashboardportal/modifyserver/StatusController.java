@@ -43,65 +43,67 @@ public class StatusController {
 	private HostRAMRepository repository3;
 	@Autowired
 	private serveractrepository repository1;
-	
+	@Autowired
+	 private ServerGroupRepository repository4;
 	@Autowired
 	private HostCPURepository repository2;
 	
 	@Autowired
 	private ResourceLoader resourceLoader;
 	@CrossOrigin
-	@RequestMapping("/hoststatus")
-    public HostStatus getstatus() throws IOException 
-    {
-		Resource resource = resourceLoader.getResource("classpath:status.txt");
-		//To load a resource from a file system, you use the file prefix.
-		//To load a resource from the classpath, you use the classpath prefix.
-		//List<String> lines = Files.readAllLines(Paths.get(resource.getURI()),
-          //      StandardCharsets.UTF_8);
-		String statecode = null;
-		String statecode1 = null;
-		String statecode2 = null;
-		Double up = null;
-		Double down = null;
-		InputStream in = resource.getInputStream();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-		for(int count=0; count<90;count++)
-		{
-			if(count==69)
-			{
-			statecode=reader.readLine();
-			}
-			if(count==85)
-			{
-			statecode1=reader.readLine();
-			statecode2=reader.readLine();
-			break;
-			}
-			reader.readLine();	
-		}
-		
-		HostStatus status= new HostStatus();
-		up=Double.parseDouble(statecode1.substring(21));
-		down=Double.parseDouble(statecode2.substring(23));
-		status.setLast_time_up(up);
-		status.setLast_time_down(down);
-		if (statecode.equals("        current_state=0"))
-		{
-			status.setHoststatus("OK");
-		}
-		else if (statecode.equals("        current_state=1"))
-		{
-			status.setHoststatus("CRITICAL");	
-		}
-		else if (statecode.equals("        current_state=2"))
-		{
-			status.setHoststatus("WARNING");	
-		}
-		else {
-			status.setHoststatus("Unknown Status");	
-		}
-		return status;
-	}
+    	@RequestMapping(value="/hoststatus",method =RequestMethod.GET)
+
+    public ServerGroup getstatus(@RequestParam ("serverId") String serverId) throws IOException
+
+    {       
+              String template="http://127.0.0.1/nagios/cgi-bin/statusjson.cgi?query=host&formatoptions=enumerate&hostname=%s";
+
+              String path=String.format(template,serverId);
+
+              
+
+              String[] command = {"curl","--noproxy","*","-v","-u","nagiosadmin:amith123",path };
+
+             
+
+              ServerGroup sid= new ServerGroup();
+
+              sid= repository4.findByServerId(serverId);
+
+             
+
+              StringBuilder jsonString = new StringBuilder();
+
+              jsonString.append("{");
+              Process process = Runtime.getRuntime().exec(command);
+
+              BufferedReader reader = new BufferedReader(new InputStreamReader(
+
+                              process.getInputStream()));
+
+              String s;
+
+              int i=0;
+
+              while ((s = reader.readLine()) != null) {
+             
+                     jsonString.append(s);
+
+              }
+
+              reader.close();
+		String stat=jsonString.toString();
+              sid.setServerStatusJson(stat.replaceAll("\\\\", ""));
+
+             
+
+              return sid;
+
+             
+
+             
+
+       }
 	@CrossOrigin
 	@RequestMapping("/diskstatus")
     public DiskStatus getdiskstatus() throws IOException 

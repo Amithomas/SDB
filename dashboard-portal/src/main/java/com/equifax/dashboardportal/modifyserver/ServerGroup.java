@@ -24,7 +24,23 @@ public class ServerGroup {
 	private String groupName;
 	@Column
 	private String port;
+	@Column
 
+       private String serverStatusJson;
+
+public String getServerStatusJson() {
+
+              return serverStatusJson;
+
+       }
+
+ 
+
+       public void setServerStatusJson(String serverStatusJson) {
+
+              this.serverStatusJson = serverStatusJson;
+
+       }
 	public String getServerId() {
 		return serverId;
 	}
