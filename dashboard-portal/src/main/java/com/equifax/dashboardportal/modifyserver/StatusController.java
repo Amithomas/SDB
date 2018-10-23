@@ -56,13 +56,11 @@ public class StatusController {
     public ServerGroup getstatus(@RequestParam ("serverId") String serverId) throws IOException
 
     {       
-              String template="http://127.0.0.1/nagios/cgi-bin/statusjson.cgi?query=host&formatoptions=enumerate&hostname=%s";
-
-              String path=String.format(template,serverId);
+              
 
               
 
-              String[] command = {"curl","--noproxy","*","-v","-u","nagiosadmin:amith123",path };
+              String[] command = {"./hoststatus",serverId };
 
              
 
@@ -108,7 +106,7 @@ public class StatusController {
 	@RequestMapping("/diskstatus")
     public DiskStatus getdiskstatus() throws IOException 
     {
-		String[] command = { "/usr/local/nagios/libexec/check_disk","-w","20%","-c","10%"};
+		String[] command = { "./diskstatus"};
             Process process = Runtime.getRuntime().exec(command);
  BufferedReader reader = new BufferedReader(new InputStreamReader(
                 process.getInputStream()));
@@ -130,7 +128,7 @@ public class StatusController {
 	@RequestMapping(value="/cpustatus", method = RequestMethod.GET)
     public CPUStatus getcpustatus() throws IOException 
     {
-		 String[] command = { "/usr/local/nagios/libexec/check_cpu_stats.sh"};
+		 String[] command = { "./cpustatus"};
             Process process = Runtime.getRuntime().exec(command);
  BufferedReader reader = new BufferedReader(new InputStreamReader(
                 process.getInputStream()));
@@ -176,7 +174,7 @@ public class StatusController {
 
     public RAMStatus getramstatus() throws IOException
 
-    {             String[] command = { "/usr/local/nagios/libexec/check_mem.pl","-f","-w","20%","-c","10%"};
+    {             String[] command = { "./ramstatus"};
             Process process = Runtime.getRuntime().exec(command);
  BufferedReader reader = new BufferedReader(new InputStreamReader(
                 process.getInputStream()));
@@ -193,7 +191,7 @@ public class StatusController {
 
               //System.out.print(state);
 
-              ram1.setRAMUsage(100-(Double.parseDouble(splitStr[2].substring(0,4))));
+              ram1.setRAMUsage(100-(Double.parseDouble(splitStr[2].substring(0,3))));
 
               
               String []stat= ram1.getDATA();
@@ -436,7 +434,7 @@ return repository3.save(sg1);
 	@RequestMapping(value="/services", method = RequestMethod.GET)
 	public List<Service> service_list () throws IOException
 	{	
-		String[] command = {"curl","--noproxy","*","-v","-u","my_user:my_pass","http://127.0.0.1:8080/manager/text/list" };
+		String[] command = {"./services" };
 	    Process process = Runtime.getRuntime().exec(command);
 	    BufferedReader reader = new BufferedReader(new InputStreamReader(
 	        process.getInputStream()));
@@ -575,17 +573,11 @@ return repository3.save(sg1);
 
              
 
-       {     
-
-             
-
-              String template="http://127.0.0.1:8080/manager/text/stop?path=%s";
-
-              String path=String.format(template,sname);
+  	 {
 
       
 
-              String[] command = {"curl","--noproxy","*","-v","-u","my_user:my_pass",path };
+              String[] command = {"./servicesactions","stop",sname };
 
            Process process = Runtime.getRuntime().exec(command);
 
@@ -629,17 +621,9 @@ return repository3.save(sg1);
 
        public boolean startservice (@RequestParam ("sname") String sname) throws IOException
 
-       {     
+       {    
 
-             
-
-              String template="http://127.0.0.1:8080/manager/text/start?path=%s";
-
-              String path=String.format(template,sname);
-
-      
-
-              String[] command = {"curl","--noproxy","*","-v","-u","my_user:my_pass",path };
+              String[] command = {"./servicesactions","start",sname };
 
            Process process = Runtime.getRuntime().exec(command);
 

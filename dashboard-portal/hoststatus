@@ -1,0 +1,3 @@
+#!/bin/bash
+curl --noproxy "*" -v -u nagiosadmin:amith123 "http://127.0.0.1/nagios/cgi-bin/statusjson.cgi?query=host&formatoptions=enumerate&hostname=$1"
+

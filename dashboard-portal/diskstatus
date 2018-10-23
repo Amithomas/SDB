@@ -1,0 +1,2 @@
+#!/bin/bash
+/usr/local/nagios/libexec/check_disk -w 20% -c 10%

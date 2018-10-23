@@ -1,0 +1,2 @@
+#!/bin/bash
+curl --noproxy "*" -v -u my_user:my_pass "http://127.0.0.1:8080/manager/text/list"
