@@ -1,0 +1,44 @@
+{
+  "format_version": 0,
+  "result": {
+    "query_time": 1541397537000,
+    "cgi": "statusjson.cgi",
+    "user": "nagiosadmin",
+    "query": "servicelist",
+    "query_status": "released",
+    "program_start": 1541396473000,
+    "last_data_update": 1541397532000,
+    "type_code": 0,
+    "type_text": "Success",
+    "message": ""
+  },
+  "data": {
+    "selectors": {
+      "parenthost": "none",
+      "childhost": "none"
+    },
+    "servicelist": {
+      "localhost": {
+        "Current Load": "ok",
+        "Current Users": "ok",
+        "HTTP": "ok",
+        "PING": "ok",
+        "Root Partition": "ok",
+        "SSH": "ok",
+        "Swap Usage": "ok",
+        "Tomcat-1-8050": "critical",
+        "Tomcat-1-8080": "ok",
+        "Tomcat-2-8070": "ok",
+        "Tomcat-3-8060": "ok",
+        "Total Processes": "ok"
+      }
+    }
+  }
+}
+
+
+
+
+
+
+ curl --noproxy "*" -v -u nagiosadmin:amith123 "http://10.10.114.52/nagios/cgi-bin/statusjson.cgi?query=servicelist&formatoptions=enumerate&parenthost=none&childhost=none&hostname=localhost"
